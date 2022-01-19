@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int info;
+    struct node *link;
+};
+typedef struct node *NODE;
+
+NODE getnode()
+{
+    NODE x;
+    x=(NODE)malloc(sizeof(struct node));
+    if(x==NULL)
+    {
+        printf("\n out of memory\n");
+        exit(0);
+    }
+    return x;
+}
+
+NODE insert_front(int item,NODE first)
+{
+    NODE temp;
+    temp=getnode();
+    temp->info=item;
+    temp->link=first;
+    return temp;
+}
+
+NODE reverse(NODE first)
+{
+  NODE cur,temp;
+  cur=NULL;
+  while(first!=NULL)
+  {
+    temp=first;
+    first=first->link;
+    temp->link=cur;
+    cur=temp;
+  }
+  return cur;
+}
+
+int length(NODE first)
+{
+  NODE cur;
+  int count=0;
+  cur=first;
+  while(cur!=NULL)
+  {
+    count++;
+    cur=cur->link;
+  }
+  return count;
+}
+
+void display(NODE first)
+{
+  NODE cur;
+  if(first==NULL)
+  {
+    printf("list is empty\n");
+    return;
+  }
+printf("the contents of the list are\n");
+cur=first;
+while(cur!=NULL)
+{
+  printf("%d\n",cur->info);
+  cur=cur->link;
+}
+printf("\n");
+}
+
+void main()
+{
+    NODE first;
+    int ch ,item;
+    first=NULL;
+    for(;;)
+    {
+    printf("enter your choice\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:printf("enter the item to be inserted\n");
+            scanf("%d",&item);
+            first=insert_front(item,first);
+            break;
+            case 2:
+            printf("length=%d\n",length(first));
+            break;
+            case 3:first=reverse(first);
+            display(first);
+            break;
+            case 4:
+            display(first);
+        }
+
+    }
+
+}
+
+
